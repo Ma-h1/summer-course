@@ -1,219 +1,220 @@
-# Problem Set 3 — Data Structures, String Methods & List Methods
+# Problem Set 3 — Importing Modules
 
-**Topics covered:** dictionaries, sets, string methods (`.lower()`, `.split()`, `.strip()`, `.replace()`, `.join()`, etc.), list methods (`.append()`, `.sort()`, `.count()`, `.remove()`, etc.)
+**Topics covered:** `import` statements, the `random` module, the `math` module, the `turtle` module
 
 ---
 
-## Problem 1 — Soldier Roster & Dispatch System 🪖
+## Problem 1 — Dice Roll Simulator 🎲
 
-*HQ needs a searchable roster of available soldiers. Your program will parse incoming personnel reports, build a roster, and process dispatch orders.*
-
-**You are given the following personnel reports as raw strings:**
-
-```python
-reports = [
-    "SANTOS | Private | Fitness:91 | Status:available",
-    "KOWALSKI | Corporal | Fitness:74 | Status:deployed",
-    "OKAFOR | Sergeant | Fitness:88 | Status:available",
-    "BRIGGS | Private | Fitness:55 | Status:available",
-    "NAKAMURA | Corporal | Fitness:82 | Status:deployed",
-    "REYES | Sergeant | Fitness:79 | Status:available",
-]
-```
+*You're building a virtual dice table for a tabletop war game. Soldiers roll dice to determine attack outcomes, movement, and morale checks.*
 
 **Your task:**
 
-- Use a `for` loop to parse each report string. Use `.split("|")`, `.strip()`, and `.split(":")` to extract each field.
-- Use `.title()` on names and `.lower()` on status values to normalise the data.
-- Build a dictionary called `roster` where each key is a soldier's name and the value is a dictionary with keys `rank`, `fitness`, and `status`.
-- Use a set to collect all unique ranks in the roster and print them.
-- Build and print a list of all **available** soldiers, sorted alphabetically by name using `.sort()`.
-- Write a function `dispatch(roster, name)` that sets a soldier's status to `"deployed"` if they are currently `"available"`, or prints a message if they are already deployed or not found.
-- Call `dispatch()` on `"Santos"` and `"Kowalski"`, then print the updated roster status for both.
+- Import the `random` module.
+- Write a function `roll(sides)` that simulates rolling a single die with the given number of sides and returns the result. Use `random.randint()`.
+- Write a function `roll_many(num_dice, sides)` that rolls multiple dice and returns a list of results.
+- Simulate the following scenario:
+  - Roll **2d6** (two 6-sided dice) for a movement check. Print each roll and the total.
+  - Roll **1d20** for an attack check. If the result is 20, print `CRITICAL HIT!`. If it's 1, print `CRITICAL MISS!`. Otherwise print the result.
+  - Roll **3d8** for damage. Print each roll, the total, and the average (rounded to 1 decimal place).
+- Run the damage roll **1000 times** using a `for` loop and track the average total damage across all runs. Print the result — how close is it to the theoretical average?
 
-**Expected output (partial):**
+> **Hint:** The theoretical average of one d8 is 4.5, so three d8s should average around 13.5.
+
+**Example output (results will vary):**
 
 ```
-=== ROSTER LOADED ===
-6 soldiers on record.
-Ranks on file: {'Private', 'Corporal', 'Sergeant'}
+=== MOVEMENT CHECK (2d6) ===
+Roll 1: 4   Roll 2: 6   Total: 10
 
-Available soldiers: ['Briggs', 'Okafor', 'Reyes', 'Santos']
+=== ATTACK CHECK (1d20) ===
+Roll: 20 — CRITICAL HIT!
 
-Dispatching Santos...   Done. Status set to deployed.
-Dispatching Kowalski... Kowalski is already deployed.
+=== DAMAGE ROLL (3d8) ===
+Rolls: [5, 3, 7]   Total: 15   Average: 5.0
 
-Updated status:
-  Santos   : deployed
-  Kowalski : deployed
+=== SIMULATION (1000 damage rolls) ===
+Simulated average total: 13.47
+Theoretical average:     13.5
 ```
 
 ### Challenge
 
-Write a function `fitness_report(roster)` that builds and returns a dictionary with three keys — `"high"`, `"medium"`, and `"low"` — each mapping to a list of soldier names in that fitness band (high ≥ 80, medium 60–79, low < 60). Use `.append()` to build each list and `.sort()` to sort the names. Print the full report.
+Use `random.seed(42)` at the top of your program and run it twice. Notice that the results are identical both times — explain in a comment why this happens and when it might be useful. Then remove the seed and use `random.choice()` to pick a random battle quote from a list of at least five strings and print it at the end.
 
 ---
 
-## Problem 2 — Recipe Ingredient Checker 🍳
+## Problem 2 — Space Mission Calculator 🚀
 
-*You're building a tool that helps cooks figure out what they can make with what's in their kitchen, and what they're missing.*
-
-**You are given the following recipes and pantry:**
-
-```python
-recipes = {
-    "omelette":        ["eggs", "butter", "salt", "pepper", "cheese"],
-    "pancakes":        ["flour", "eggs", "milk", "butter", "sugar", "salt"],
-    "tomato pasta":    ["pasta", "tomatoes", "garlic", "olive oil", "salt", "pepper"],
-    "grilled cheese":  ["bread", "cheese", "butter"],
-}
-
-pantry = ["eggs", "butter", "salt", "pepper", "cheese", "milk", "bread", "garlic"]
-```
+*Your spacecraft navigation system needs precise calculations. Import the `math` module to power the nav computer.*
 
 **Your task:**
 
-- Convert `pantry` to a set for efficient lookups.
-- Write a function `can_make(recipe_ingredients, pantry_set)` that returns `True` if every ingredient is in the pantry, `False` otherwise.
-- Write a function `missing_ingredients(recipe_ingredients, pantry_set)` that returns a **sorted list** of any ingredients not in the pantry. Use `.sort()` or `sorted()`.
-- Use a `for` loop to go through each recipe, call both functions, and print whether it can be made and — if not — what's missing.
-- At the end, print a list of all **unique ingredients** across all recipes, sorted alphabetically. Use a set and `.sort()`.
+- Import the `math` module.
+- Write a function `distance(x1, y1, x2, y2)` that calculates the straight-line distance between two points in space using the distance formula. Use `math.sqrt()`.
+- Write a function `orbit_circumference(radius)` that calculates the circumference of a circular orbit. Use `math.pi`.
+- Write a function `fuel_needed(mass, velocity)` that calculates kinetic energy as `0.5 * mass * velocity ** 2`, then returns the result rounded to 2 decimal places using `math.floor()`.
+- Use the functions to print a navigation report for the following mission data:
+
+```python
+ship_pos    = (0, 0)
+station_pos = (143, 892)
+orbit_radius = 6371        # km (Earth's radius)
+ship_mass    = 50000       # kg
+ship_velocity = 7800       # m/s
+```
+
+- Also print `math.log(ship_velocity, 10)` and explain in a comment what this value represents.
 
 **Expected output:**
 
 ```
-=== RECIPE CHECKER ===
-omelette       : CAN MAKE ✓
-pancakes       : MISSING — ['flour', 'sugar']
-tomato pasta   : MISSING — ['olive oil', 'pasta', 'tomatoes']
-grilled cheese : CAN MAKE ✓
-
-All unique ingredients (12): ['bread', 'butter', 'cheese', 'eggs', ...]
+=== NAVIGATION REPORT ===
+Distance to station:    902.35 units
+Orbit circumference:    40030.17 km
+Kinetic energy (fuel):  1520100000000.0 J
+Log10 of velocity:      3.89
 ```
 
 ### Challenge
 
-Ask the user to type in a comma-separated list of extra ingredients they have on hand (e.g. `"flour, pasta, tomatoes"`). Use `.split(",")` and `.strip()` to parse the input, add the new items to the pantry set, and re-run the recipe checker. Print which recipes became newly available.
+Use `math.degrees()` and `math.radians()` to write a function `bearing(x1, y1, x2, y2)` that returns the angle in degrees from one point to another using `math.atan2()`. Print the bearing from the ship to the station. Then use `math.ceil()` and `math.floor()` on the distance result and explain the difference between them in a comment.
 
 ---
 
-## Problem 3 — Song Lyric Word Counter 🎵
+## Problem 3 — Animal Habitat Drawing 🐢
 
-*Pick your favourite song and paste a few verses as a string in your code. Your program will analyse the lyrics and report word frequency statistics.*
+*Use Python's `turtle` module to draw a nature scene — a simple habitat with a sun, grass, and a pond.*
 
-**Your task:**
+**Turtle basics — read this first:**
 
-- Assign your chosen lyrics to a variable called `lyrics` as a multi-line string. Here is an example you can use if you prefer:
-
-```python
-lyrics = """
-we will we will rock you
-we will we will rock you
-buddy youre a boy make a big noise
-playing in the street gonna be a big man someday
-you got mud on your face you big disgrace
-kicking your can all over the place singing
-we will we will rock you
-"""
-```
-
-- Use `.lower()` to normalise the lyrics, then `.split()` to get a list of words.
-- Use `.replace()` to strip out any punctuation characters you want to ignore (e.g. commas, apostrophes).
-- Use a `for` loop and a dictionary to count how many times each word appears.
-- Use `.sort()` on a list of the dictionary's keys to print every word and its count alphabetically.
-- Use a set to find and print the number of **unique** words.
-- Use `.count()` on the words list to verify the count of your most frequent word.
-- Print the most frequently used word and its count.
-
-**Expected output (partial, using example lyrics):**
-
-```
-=== WORD COUNT ===
-a          : 4
-all        : 1
-be         : 1
-big        : 3
-...
-we         : 6
-will       : 6
-...
-
-Unique words: 26
-Most common word: 'we' — 6 times
-Verified with .count(): 6
-```
-
-### Challenge
-
-Define a set of stop words to filter out common filler words before counting:
+The `turtle` module lets you draw by moving a virtual "pen" around the screen. Here are the key commands you'll need:
 
 ```python
-stop_words = {"a", "the", "you", "your", "in", "on", "we", "be", "got"}
-```
+import turtle
 
-Use a `for` loop to build a filtered word list that excludes any word in `stop_words`. Re-run your word count on the filtered list and print the most common *meaningful* word.
-
----
-
-## Problem 4 — Zoo Animal Registry 🦁
-
-*You've just been hired as the data manager for a city zoo. Your job is to build and query a registry of animals currently in residence.*
-
-**You are given the following raw data as a list of comma-separated strings:**
-
-```python
-raw_data = [
-    "Simba, lion, 7, Africa",
-    "Pebbles, penguin, 3, Antarctica",
-    "Kovu, lion, 4, Africa",
-    "Bubbles, dolphin, 12, Ocean",
-    "Mango, parrot, 6, South America",
-    "Nala, lion, 5, Africa",
-    "Splash, dolphin, 8, Ocean",
-    "Crackers, parrot, 2, South America",
-]
+t = turtle.Turtle()       # create a turtle to draw with
+t.forward(100)            # move forward 100 pixels
+t.right(90)               # turn right 90 degrees
+t.left(90)                # turn left 90 degrees
+t.penup()                 # lift the pen (move without drawing)
+t.pendown()               # put the pen down (start drawing)
+t.goto(x, y)              # jump to a specific position
+t.color("green")          # set the pen color
+t.begin_fill()            # start filling a shape
+t.end_fill()              # fill the shape with the current color
+t.circle(50)              # draw a circle with radius 50
+turtle.done()             # keep the window open when finished
 ```
 
 **Your task:**
 
-- Use a `for` loop to process each string. Use `.split(",")` and `.strip()` to parse each entry into its four fields: name, species, age, and origin.
-- Build a dictionary called `registry` where each key is an animal's name and the value is another dictionary with keys `species`, `age`, and `origin`.
-- Use a set to find all **unique species** in the zoo and print them.
-- Use a set to find all **unique origins** and print how many distinct regions the zoo's animals come from.
-- Ask the user to enter an animal's name. Use `.strip()` and `.title()` to clean the input, then look it up in the registry and print the result.
+- Draw a simple outdoor scene containing all of the following:
+  - A **yellow sun** in the upper corner (use `t.circle()` with a fill color).
+  - A green **grass strip** along the bottom of the screen (a filled rectangle).
+  - A **blue pond** (a filled circle or oval) sitting on the grass.
+  - At least **3 trees** drawn using a `for` loop — each tree should be a brown rectangle (trunk) topped with a green circle (leaves). Use `t.penup()` / `t.pendown()` and `t.goto()` to space them out.
 
-**Example output (partial):**
+- Use `t.speed(0)` to make the drawing fast.
+- Organise your code with at least two functions, e.g. `draw_sun(t, x, y)` and `draw_tree(t, x, y)`.
+
+> **Note:** The turtle window may open behind other windows — check your taskbar if you don't see it.
+
+**Expected result:** A simple nature scene with a sun, grass, a pond, and a row of trees.
+
+### Challenge
+
+Add a `for` loop that uses `random.randint()` to place **10 trees** at random x-positions along the grass line, each with a randomly chosen height between 40 and 100 pixels. Import `random` alongside `turtle` to make this work. Make sure no tree is drawn off-screen by clamping the x-position within a safe range.
+
+---
+
+## Problem 4 — Animal Guessing Game 🐾
+
+*Combine `random` and `math` to build a number-guessing game with a twist — the computer gives hints using math.*
+
+**Your task:**
+
+- Import `random` and `math`.
+- Randomly generate a **secret number** between 1 and 100 using `random.randint()`. The player must guess it.
+- Use a `while` loop to keep accepting guesses. After each wrong guess, print a hint:
+  - Use `math.fabs()` to calculate the absolute distance between the guess and the secret number.
+  - If the distance is > 40, print `ICE COLD`.
+  - If the distance is > 20, print `COLD`.
+  - If the distance is > 10, print `WARM`.
+  - Otherwise print `HOT!`
+- When the player guesses correctly, print the number of guesses it took, and use `math.log2()` to print the "information-theoretic" minimum guesses needed (i.e. `math.ceil(math.log2(100))`). Add a comment explaining what this number means.
+
+**Example run:**
 
 ```
-=== ZOO REGISTRY BUILT ===
-8 animals registered.
+=== ANIMAL GUESSING GAME ===
+A secret animal is waiting...
 
-Unique species: {'lion', 'penguin', 'dolphin', 'parrot'}
-Animals come from 4 distinct regions.
+Guess a number (1-100): 50
+Hint: COLD
 
-Enter an animal name to look up: bubbles
+Guess a number (1-100): 25
+Hint: WARM
 
-Name:    Bubbles
-Species: dolphin
-Age:     12
-Origin:  Ocean
+Guess a number (1-100): 18
+Hint: HOT!
+
+Guess a number (1-100): 21
+CORRECT! The secret animal was: narwhal
+You guessed it in 4 tries.
+Minimum possible guesses (optimal): 7
 ```
 
 ### Challenge
 
-Build a second dictionary called `by_species` where each key is a species name and the value is a list of animal names of that species. Use `.append()` to build each list. Then use `", ".join()` to print each species and its animals on one line, like:
+Track all the player's guesses in a list. After the game ends, use `math.fsum()` to calculate the sum of all guesses and print the mean guess.
 
+
+## Problem 5 — Square Spiral 🌀
+ 
+*Use the `turtle` module to draw a square spiral. The more times around the square, the tighter and more impressive the spiral.*
+ 
+**How a square spiral works:**
+ 
+A normal square has 4 sides of equal length. A spiral is made the same way, except the side length gets a little longer each time you draw a side. After many iterations this creates an expanding square spiral pattern.
+ 
 ```
-lion    : Simba, Kovu, Nala
-dolphin : Bubbles, Splash
-...
+side length starts at some value
+each side: draw forward, turn right 90 degrees
+after each full loop of 4 sides: the side length has grown
 ```
-
----
-
+ 
+**Your task:**
+ 
+- Ask the user how many times they want to go around the square using `input()`. Cast it to an `int`.
+- Use a `for` loop to draw the spiral. The total number of sides drawn is `laps * 4` (4 sides per loop). Each lap should:
+  - Move the turtle forward by the current side length.
+  - Turn right by 90 degrees.
+  - Increase the side length by a small fixed amount (try `5` to start).
+- Use `t.speed(0)` to draw quickly.
+- Use `turtle.done()` to keep the window open when finished.
+ 
+> **Hint:** Start with a side length of `10`. After each side, add `5`. With 10 laps that's 40 sides drawn, growing from length 10 up to 205.
+ 
+**Example run:**
+ 
+```
+How many times around the square? 10
+```
+ 
+*Result: A square spiral that expands outward, completing 10 full rotations.*
+ 
+### Challenge
+ 
+Ask the user for a second input: a color mode. If they type `"rainbow"`, change the pen color on every side using `t.color()` and a list of colors cycled with the modulo `%` operator. If they type a specific color name like `"blue"`, draw the whole spiral in that color. Use a conditional to handle both cases.
+ 
+ ---
+ 
 ## References
-
-- [Python dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
-- [Python sets](https://docs.python.org/3/tutorial/datastructures.html#sets)
-- [Python list methods](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)
-- [Python string methods](https://docs.python.org/3/library/stdtypes.html#string-methods)
+ 
+- [Python `random` module](https://docs.python.org/3/library/random.html)
+- [Python `math` module](https://docs.python.org/3/library/math.html)
+- [Python `turtle` module](https://docs.python.org/3/library/turtle.html)
+- [Turtle graphics beginner guide](https://docs.python.org/3/library/turtle.html#turtle-methods)
+ 
+---
