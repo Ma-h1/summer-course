@@ -1,4 +1,4 @@
-print ("This will help you determine which pizza is better so you can be the fatboy you want to be for the least money!")
+
 small = int(input ("What size is the Small Pizza?  "))
 smallnumber = int(input("How many Small Pizzas?  "))
 smallprice = float(input ("How much are the small Pizzas?  "))
