@@ -6,8 +6,7 @@ while guess != secret:
        print("You are too high!")
     else:
        print("You are too low!")
-    if count > 5
-
+    if count > 5:
     guess = int(input("Wrong! Guess an integer number:  ")) 
     count += 1
 
